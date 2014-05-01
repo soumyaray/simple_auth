@@ -1,0 +1,44 @@
+I've updated this code example to work with bundler so specific gem versions can be more easily installed. I've also tested with Ruby 1.9.2p0.
+
+The best way to get on 1.9.2p0 if you aren't already is to use RVM (http://rvm.beginrescueend.com/). Then install bundler with the following:
+gem install bundler --version=1.0.7
+
+Then install the gems:
+bundle install
+
+Now you'll have to create the database. Do this from the command line:
+rake db:migrate
+
+Then you can run the service specs by doing this:
+rspec spec/service_spec.rb
+
+Note that you should be using the rspec command. It used to be spec, but with new versions this will throw an error.
+
+You can run the client specs by opening up two terminal windows and putting the two commands in each:
+ruby service.rb -p 3000
+rspec spec/client_spec.rb
+
+#
+# NEW COMMENTS (cocoa)
+# 
+
+Install RVM:
+curl -L https://get.rvm.io | bash -s stable --ruby
+
+Remove Gemfile.lock: 
+rm Gemfile.lock
+
+Install the gems:
+bundle install
+
+Migrate the development and test databases:
+rake db:migrate SINATRA_ENV=test
+rake db:migrate SINATRA_ENV=development
+
+Run the service specs:
+rspec spec/service_spec.rb
+
+Run the client library specs. In 2 diferent terminals:
+ruby service.rb -e test -p 3000
+rspec spec/client_spec.rb
+
