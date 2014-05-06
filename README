@@ -1,44 +1,23 @@
-I've updated this code example to work with bundler so specific gem versions can be more easily installed. I've also tested with Ruby 1.9.2p0.
+# BASED ON: https://github.com/pauldix/service-oriented-design-with-ruby/tree/master/chapter_01
 
-The best way to get on 1.9.2p0 if you aren't already is to use RVM (http://rvm.beginrescueend.com/). Then install bundler with the following:
+# if you don't have bundler installed, then please do the following:
 gem install bundler --version=1.0.7
 
-Then install the gems:
-bundle install
-
-Now you'll have to create the database. Do this from the command line:
-rake db:migrate
-
-Then you can run the service specs by doing this:
-rspec spec/service_spec.rb
-
-Note that you should be using the rspec command. It used to be spec, but with new versions this will throw an error.
-
-You can run the client specs by opening up two terminal windows and putting the two commands in each:
-ruby service.rb -p 3000
-rspec spec/client_spec.rb
-
-#
-# NEW COMMENTS (cocoa)
-# 
-
-Install RVM:
-curl -L https://get.rvm.io | bash -s stable --ruby
-
-Remove Gemfile.lock: 
+# Remove Gemfile.lock:
 rm Gemfile.lock
 
-Install the gems:
+# Then install the gems within the root of the project:
 bundle install
 
-Migrate the development and test databases:
+# Migrate the development and test databases (pick one):
 rake db:migrate SINATRA_ENV=test
 rake db:migrate SINATRA_ENV=development
 
-Run the service specs:
-rspec spec/service_spec.rb
+# Run the Sinatra service. for -e flag, specify test or development.
+# test environment will create database entry
+ruby service.rb -e test
 
-Run the client library specs. In 2 diferent terminals:
-ruby service.rb -e test -p 3000
+# To view service, point browser to: http://localhost:4567/...
+
+# To test service (note, may not work on latest code version):
 rspec spec/client_spec.rb
-
