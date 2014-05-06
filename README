@@ -17,7 +17,9 @@ rake db:migrate SINATRA_ENV=development
 # test environment will create database entry
 ruby service.rb -e test
 
-# To view service, point browser to: http://localhost:4567/...
+# To view service, point browser to: http://localhost:4567/... or use curl:
+$ curl localhost:4567/api/v1/users/paul
+$ curl -X POST -H "Content-Type: application/json" -d '{"name":"Ray", "email":"soumyaray@fiction.net", "bio":"prof" }' http://localhost:4567/api/v1/users
 
 # To test service (note, may not work on latest code version):
 rspec spec/client_spec.rb
