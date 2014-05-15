@@ -2,8 +2,15 @@ source "http://rubygems.org"
 
 # service
 gem 'activerecord'
-gem 'sqlite3'
 gem 'sinatra'
+
+group :development, :test do
+  gem 'sqlite3'       # local
+end
+
+group :production do
+  gem 'pg'            # for Heroku
+end
 
 # client
 gem 'json'

@@ -1,13 +1,14 @@
 require 'active_record'
 require 'sinatra'
+#require './environments.rb'
 require_relative 'models/user.rb'
 require 'logger'
 
 # setting up a logger. levels -> DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
 log = Logger.new(STDOUT)
-log.level = Logger::DEBUG 
+log.level = Logger::DEBUG
 
-# setting up our environment
+# DISCOVERING WHICH ENVIRONMENT IS REQUESTED
 env_index = ARGV.index("-e")
 env_arg = ARGV[env_index + 1] if env_index
 env = env_arg || ENV["SINATRA_ENV"] || "development"
@@ -20,11 +21,11 @@ ActiveRecord::Base.establish_connection(databases[env])
 log.debug "#{databases[env]['database']} database connection established..."
 
 # creating fixture data (only in test mode)
-if env == 'test'
+if (env == 'test') || (env == 'production')
   User.destroy_all
   User.create(
-   :name => "paul", 
-   :email => "paul@pauldix.net", 
+   :name => "paul",
+   :email => "paul@pauldix.net",
    :bio => "rubyist")
   log.debug "fixture data created in test database..."
 end
