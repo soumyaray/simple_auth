@@ -16,7 +16,7 @@ log.debug "env: #{env}"
 
 # connecting to the database
 use ActiveRecord::ConnectionAdapters::ConnectionManagement # close connection to the DDBB properly...https://github.com/puma/puma/issues/59
-databases = YAML.load(ERB.new(File.read("config/database.yml")).result)
+databases = YAML.load(ERB.new(File.read('config/database.yml')).result)
 ActiveRecord::Base.establish_connection(databases[env])
 log.debug "#{databases[env]['database']} database connection established..."
 
