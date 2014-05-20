@@ -27,7 +27,6 @@ To create a local `development` or `test` database (pick one):
 
     $ ruby service.rb -e test
 
-
 To view service, point browser to: http://localhost:4567/... or use curl:
 
     $ curl localhost:4567/api/v1/users/paul
@@ -35,32 +34,43 @@ To view service, point browser to: http://localhost:4567/... or use curl:
 note: the second curl command is sending a request json data in the HTTP body
 
 ## Publishing on Heroku
-Create a new Heroku app (skip if you already made one)
+###Create a new Heroku app (skip if you already made one)
 
     $ heroku create <name-of-your-app>
+You can see your app on heroku.com now.
 
-Send repo to Heroku:
+###Send repo to Heroku:
 
     $ git push heroku master
+notes on `git push`:
+1. this will start the sinatra app running on heroku
+2. no database yet -- accessing your sinatra app will cause it to crash
 
-Configure Heroku to run in production:
+### Configure Heroku to run in production:
 
     $ heroku config:add SINATRA_ENV=production
-note: this is equivalent to local cmd: `ruby app.rb -e production`
+notes on `heroku config:add`:
+1. this is equivalent to local cmd: `ruby app.rb -e production`
+2. adding an environment variable restarts the sinatra app on heroku
 
-You may have to restart Heroku (try it once without doing so):
-
-    $ heroku restart        # do this from the sinatra app's root directory
-
-Create the database on Heroku:
+### Create the database on Heroku:
 
     $ heroku run rake db:migrate
 
-Check for logging errors:
+You will have to restart the app now because it never connected to the database:
+
+### Restart Sinatra app:
+do this from the sinatra app's root directory:
+
+    $ heroku restart
+Your app is up and running! If it isn't, check the logs...
+
+### Check for logged errors:
 
     $heroku logs
 
+## Ignore below:
+ The following does not yet work -- please ignore for now
 
- <!-- The following does not yet work -- please ignore for now
  To test service (note, may not work on latest code version):
- rspec spec/client_spec.rb -->
+ rspec spec/client_spec.rb
