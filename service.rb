@@ -21,13 +21,21 @@ ActiveRecord::Base.establish_connection(databases[env])
 log.debug "#{databases[env]['database']} database connection established..."
 
 # creating fixture data (only in test mode)
-if (env == 'test') || (env == 'production')
+if (env == 'test')
   User.destroy_all
   User.create(
    :name => "paul",
    :email => "paul@pauldix.net",
    :bio => "rubyist")
   log.debug "fixture data created in test database..."
+elsif env == 'production'
+  unless User.find_by_email('soumya.ray.nthu@gmail.com') do
+    User.create(
+     :name => 'Soumya',
+     :email => 'soumya.ray.nthu@gmail.com',
+     :bio => 'rubyist')
+    log.debug 'fixture data created in test database...'
+  end
 end
 
 # the HTTP entry points to our service
